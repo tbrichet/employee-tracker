@@ -4,6 +4,7 @@
   "description": "Lesson 12 Weekly Challenge | SQL",
   "main": "main.js",
   "dependencies": {
+    "console.table": "^0.10.0",
     "inquirer": "^7.3.3",
     "mysql2": "^2.2.5"
   },
