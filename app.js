@@ -156,6 +156,7 @@ function addRole() {
     }
   ])
   .then(function(answer) {
+    // Insert into Database
     connection.query("INSERT INTO role (title, salary, department_id) VALUES (?,?,?)",
     [answer.newRoleName, answer.newRoleSalary, answer.newDeptId], function(err, res) {
       if (err) throw err;
@@ -192,6 +193,7 @@ function addEmployee() {
     }
   ])
   .then(function(answer) {
+    // Insert into Database
     connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)",
     [answer.newFirstName, answer.newLastName, answer.newRoleId, answer.newManagerId]), function(err, res) {
       if (err) throw err;
@@ -218,6 +220,7 @@ function updateRole() {
       message: "Please enter the new role ID for this employee:"
     })
     .then(function(answer) {
+      // Update employee record
       let newRoleId = answer.newRoleId;
       let request = "UPDATE employee SET role_id=? WHERE id=?";
       connection.query(request, [newRoleId, employeeId], function(err, res) {
