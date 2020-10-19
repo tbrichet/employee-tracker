@@ -76,7 +76,8 @@ function beginPrompts() {
       
       case "Quit Program":
         console.log("Thank You, Come Again!");
-        break;
+        connection.end();
+        process.exit();
     }
   })
 };
@@ -85,32 +86,121 @@ function beginPrompts() {
 
 // Function | View All Departments
 function viewDepts() {
-  console.log("Viewing All Departments");
+  let request = "SELECT * FROM department";
+  connection.query(request, function(err, res) {
+    if (err) throw err;
+    console.log("Viewing All Departments");
+    console.table(res);
+    beginPrompts();
+  })
 };
 
-// Function | View All Departments
+// Function | View All Roles
 function viewRoles() {
-  console.log("Viewing All Roles");
+  let request = "SELECT * FROM role";
+  connection.query(request, function(err, res) {
+    if (err) throw err;
+    console.log("Viewing All Roles");
+    console.table(res);
+    beginPrompts();
+  })
 };
 
 // Function | View All Employees
 function viewEmployees() {
-  console.log("Viewing All Employees");
+  let request = "SELECT * FROM employee";
+  connection.query(request, function(err, res) {
+    if (err) throw err;
+    console.log("Viewing All Employees");
+    console.table(res);
+    beginPrompts();
+  })
 };
 
 // Function | Add a Department
 function addDept() {
-  console.log("Adding a Department");
+  // User Prompts
+  inquirer.prompt ({
+    type: "input",
+    message: "Please enter the department name:",
+    name: "newDeptName"
+  }).then(function(answer) {
+    // Insert into Database
+    connection.query("INSERT INTO department (name) VALUES (?)", [answer.newDeptName], function(err, res) {
+      if (err) throw err;
+      console.table(res)
+      console.log("Department Added");
+      beginPrompts();
+    })
+  })
 };
 
 // Function | Add a Role
 function addRole() {
-  console.log("Adding a Role");
+  // User prompts
+  inquirer.promot ([
+    {
+      type: "input",
+      message: "Please enter the name of the new role:",
+      name: "newRoleName"
+    },
+    {
+      type: "input",
+      message: "Please enter the salary amount for the new role:",
+      name: "newRoleSalary"
+    },
+    {
+      type: "input",
+      message: "Please enter the department ID for the new role:",
+      name: "newDeptId"
+    }
+  ])
+  .then(function(answer) {
+    connection.query("INSERT INTO role (title, salary, department_id) VALUES (?,?,?)",
+    [answer.newRoleName, answer.newRoleSalary, answer.newDeptId], function(err, res) {
+      if (err) throw err;
+      console.table(res);
+      console.log("Role Added!")
+      beginPrompts();
+    }
+  )})
 };
 
 // Function | Add an Employee
 function addEmployee() {
-  console.log("Adding an Employee");
+  // User Prompts
+  inquirer.prompt([
+    {
+      type: "input",
+      message: "Please enter the employee's first name:",
+      name: "newFirstName"
+    },
+    {
+      type: "input",
+      message: "Please enter the employee's last name:",
+      name: "newLastName"
+    },
+    {
+      type: "input",
+      message: "Please enter the employee's role ID number:",
+      name: "newRoleId"
+    },
+    {
+      type: "input",
+      message: "Please enter the manager's ID number:",
+      name: "newManagerId"
+    }
+  ])
+  .then(function(answer) {
+    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)",
+    [answer.newFirstName, answer.newLastName, answer.newRoleId, answer.newManagerId]),
+    function(err, res) {
+      if(err) throw err;
+      console.table(res);
+      console.log("Employee Added!");
+      beginPrompts();
+    }
+  })
 };
 
 // Function | Update Employee Role
