@@ -29,7 +29,7 @@ This command-line CMS application allows employers to view and manage department
 
 ## Links
 GitHub Repository | https://github.com/tbrichet/employee-tracker <br>
-Screencastify Demo | 
+Screencastify Demo | https://drive.google.com/file/d/1KaJKidGhUDy-3_HzA9--LkFQ3TRptWM3/view
 
 ## Contributions
 Created with <3 by Tara Brichetto

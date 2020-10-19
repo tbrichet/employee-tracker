@@ -138,7 +138,7 @@ function addDept() {
 // Function | Add a Role
 function addRole() {
   // User prompts
-  inquirer.promot ([
+  inquirer.prompt ([
     {
       type: "input",
       message: "Please enter the name of the new role:",
@@ -160,7 +160,7 @@ function addRole() {
     [answer.newRoleName, answer.newRoleSalary, answer.newDeptId], function(err, res) {
       if (err) throw err;
       console.table(res);
-      console.log("Role Added!")
+      console.log("Role Added!");
       beginPrompts();
     }
   )})
@@ -192,10 +192,9 @@ function addEmployee() {
     }
   ])
   .then(function(answer) {
-    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)",
-    [answer.newFirstName, answer.newLastName, answer.newRoleId, answer.newManagerId]),
-    function(err, res) {
-      if(err) throw err;
+    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)",
+    [answer.newFirstName, answer.newLastName, answer.newRoleId, answer.newManagerId]), function(err, res) {
+      if (err) throw err;
       console.table(res);
       console.log("Employee Added!");
       beginPrompts();
