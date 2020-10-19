@@ -205,5 +205,28 @@ function addEmployee() {
 
 // Function | Update Employee Role
 function updateRole() {
-  console.log("Updating an Employee Role");
+  // User Prompts
+  inquirer.prompt ({
+    name: "employeeId",
+    type: "input",
+    message: "Please enter the ID of the employee you wish to update:"
+  })
+  .then(function(answer) {
+    let employeeId = answer.employeeId;
+    inquirer.prompt({
+      name: "newRoleId",
+      type: "input",
+      message: "Please enter the new role ID for this employee:"
+    })
+    .then(function(answer) {
+      let newRoleId = answer.newRoleId;
+      let request = "UPDATE employee SET role_id=? WHERE id=?";
+      connection.query(request, [newRoleId, employeeId], function(err, res) {
+        if(err) throw err;
+        console.table(res);
+        console.log("Employee Role Updated!");
+        beginPrompts();
+      })
+    })
+  })
 };
